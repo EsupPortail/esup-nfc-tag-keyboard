@@ -1,0 +1,53 @@
+2018-03-23 10:08:14,087 [main] INFO  org.esupportail.esupnfctagkeyboard.EsupNfcTagKeyboardApplication.main(EsupNfcTagKeyboardApplication.java:46)  - Startup OK
+2018-03-23 10:08:22,073 [main] WARN  org.springframework.web.client.RestTemplate.handleResponseError(RestTemplate.java:549)  - POST request for "https://esup-nfc-tag.univ-rouen.fr/csn-ws" resulted in 500 (Erreur Interne de Servlet); invoking error handler
+2018-03-23 10:08:22,086 [main] ERROR org.esupportail.esupnfctagkeyboard.EsupNfcTagKeyboardApplication.notifyError(EsupNfcTagKeyboardApplication.java:119)  - rest call error for : https://esup-nfc-tag.univ-rouen.fr/csn-ws
+org.esupportail.esupnfctagkeyboard.service.EncodingException: rest call error for : https://esup-nfc-tag.univ-rouen.fr/csn-ws
+	at org.esupportail.esupnfctagkeyboard.service.EncodingService.csnNfcComm(EncodingService.java:117)
+	at org.esupportail.esupnfctagkeyboard.EsupNfcTagKeyboardApplication.run(EsupNfcTagKeyboardApplication.java:80)
+	at org.esupportail.esupnfctagkeyboard.EsupNfcTagKeyboardApplication.main(EsupNfcTagKeyboardApplication.java:59)
+Caused by: org.springframework.web.client.HttpServerErrorException: 500 Erreur Interne de Servlet
+	at org.springframework.web.client.DefaultResponseErrorHandler.handleError(DefaultResponseErrorHandler.java:91)
+	at org.springframework.web.client.RestTemplate.handleResponseError(RestTemplate.java:556)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:514)
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:472)
+	at org.springframework.web.client.RestTemplate.postForObject(RestTemplate.java:321)
+	at org.esupportail.esupnfctagkeyboard.service.EncodingService.csnNfcComm(EncodingService.java:115)
+	... 2 more
+2018-03-23 10:08:23,292 [main] INFO  org.esupportail.esupnfctagkeyboard.EsupNfcTagKeyboardApplication.notifySuccess(EsupNfcTagKeyboardApplication.java:133)  - Application is now OK
+2018-03-23 10:08:23,422 [main] WARN  org.springframework.web.client.RestTemplate.handleResponseError(RestTemplate.java:549)  - POST request for "https://esup-nfc-tag.univ-rouen.fr/csn-ws" resulted in 500 (Erreur Interne de Servlet); invoking error handler
+2018-03-23 10:08:23,424 [main] ERROR org.esupportail.esupnfctagkeyboard.EsupNfcTagKeyboardApplication.notifyError(EsupNfcTagKeyboardApplication.java:119)  - rest call error for : https://esup-nfc-tag.univ-rouen.fr/csn-ws
+org.esupportail.esupnfctagkeyboard.service.EncodingException: rest call error for : https://esup-nfc-tag.univ-rouen.fr/csn-ws
+	at org.esupportail.esupnfctagkeyboard.service.EncodingService.csnNfcComm(EncodingService.java:117)
+	at org.esupportail.esupnfctagkeyboard.EsupNfcTagKeyboardApplication.run(EsupNfcTagKeyboardApplication.java:80)
+	at org.esupportail.esupnfctagkeyboard.EsupNfcTagKeyboardApplication.main(EsupNfcTagKeyboardApplication.java:59)
+Caused by: org.springframework.web.client.HttpServerErrorException: 500 Erreur Interne de Servlet
+	at org.springframework.web.client.DefaultResponseErrorHandler.handleError(DefaultResponseErrorHandler.java:91)
+	at org.springframework.web.client.RestTemplate.handleResponseError(RestTemplate.java:556)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:514)
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:472)
+	at org.springframework.web.client.RestTemplate.postForObject(RestTemplate.java:321)
+	at org.esupportail.esupnfctagkeyboard.service.EncodingService.csnNfcComm(EncodingService.java:115)
+	... 2 more
+2018-03-23 10:08:24,540 [main] INFO  org.esupportail.esupnfctagkeyboard.EsupNfcTagKeyboardApplication.notifySuccess(EsupNfcTagKeyboardApplication.java:133)  - Application is now OK
+2018-03-23 10:08:24,795 [main] WARN  org.springframework.web.client.RestTemplate.handleResponseError(RestTemplate.java:549)  - POST request for "https://esup-nfc-tag.univ-rouen.fr/csn-ws" resulted in 500 (Erreur Interne de Servlet); invoking error handler
+2018-03-23 10:08:24,797 [main] ERROR org.esupportail.esupnfctagkeyboard.EsupNfcTagKeyboardApplication.notifyError(EsupNfcTagKeyboardApplication.java:119)  - rest call error for : https://esup-nfc-tag.univ-rouen.fr/csn-ws
+org.esupportail.esupnfctagkeyboard.service.EncodingException: rest call error for : https://esup-nfc-tag.univ-rouen.fr/csn-ws
+	at org.esupportail.esupnfctagkeyboard.service.EncodingService.csnNfcComm(EncodingService.java:117)
+	at org.esupportail.esupnfctagkeyboard.EsupNfcTagKeyboardApplication.run(EsupNfcTagKeyboardApplication.java:80)
+	at org.esupportail.esupnfctagkeyboard.EsupNfcTagKeyboardApplication.main(EsupNfcTagKeyboardApplication.java:59)
+Caused by: org.springframework.web.client.HttpServerErrorException: 500 Erreur Interne de Servlet
+	at org.springframework.web.client.DefaultResponseErrorHandler.handleError(DefaultResponseErrorHandler.java:91)
+	at org.springframework.web.client.RestTemplate.handleResponseError(RestTemplate.java:556)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:514)
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:472)
+	at org.springframework.web.client.RestTemplate.postForObject(RestTemplate.java:321)
+	at org.esupportail.esupnfctagkeyboard.service.EncodingService.csnNfcComm(EncodingService.java:115)
+	... 2 more
+2018-03-23 10:08:25,848 [main] INFO  org.esupportail.esupnfctagkeyboard.EsupNfcTagKeyboardApplication.notifySuccess(EsupNfcTagKeyboardApplication.java:133)  - Application is now OK
+2018-03-23 10:09:14,929 [main] INFO  org.esupportail.esupnfctagkeyboard.EsupNfcTagKeyboardApplication.main(EsupNfcTagKeyboardApplication.java:46)  - Startup OK
+2018-03-23 10:09:23,673 [main] INFO  org.esupportail.esupnfctagkeyboard.EsupNfcTagKeyboardApplication.run(EsupNfcTagKeyboardApplication.java:101)  - Carte inconnue
+2018-03-23 10:09:37,895 [main] INFO  org.esupportail.esupnfctagkeyboard.EsupNfcTagKeyboardApplication.run(EsupNfcTagKeyboardApplication.java:101)  - Carte inconnue
+2018-03-23 10:09:47,004 [main] INFO  org.esupportail.esupnfctagkeyboard.EsupNfcTagKeyboardApplication.run(EsupNfcTagKeyboardApplication.java:101)  - Carte inconnue
+2018-03-23 10:09:53,317 [main] INFO  org.esupportail.esupnfctagkeyboard.EsupNfcTagKeyboardApplication.run(EsupNfcTagKeyboardApplication.java:97)  - emulate display : 1072000042086
+2018-03-23 10:24:31,556 [main] INFO  org.esupportail.esupnfctagkeyboard.EsupNfcTagKeyboardApplication.main(EsupNfcTagKeyboardApplication.java:60)  - Startup OK
+2018-03-23 10:24:39,429 [main] INFO  org.esupportail.esupnfctagkeyboard.EsupNfcTagKeyboardApplication.run(EsupNfcTagKeyboardApplication.java:111)  - emulate display : 1072000042086
