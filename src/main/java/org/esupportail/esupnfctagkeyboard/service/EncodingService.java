@@ -105,6 +105,7 @@ public class EncodingService {
 		String url = esupNfcTagServerUrl + "/csn-ws";
 		String nfcComm;
 		try{
+			log.info("try tagging on nfc-tag : " + cardId);
 			jsonInString = mapper.writeValueAsString(nfcMsg);
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);

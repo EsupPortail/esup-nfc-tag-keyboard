@@ -49,13 +49,13 @@ public class EsupNfcTagKeyboardApplication {
 		String urlAuthType = esupNfcTagServerUrl + "/nfc-ws/deviceAuthConfig/?numeroId=" + encodingService.numeroId;
 
 		try{
+			log.info("try to get auth type : " + urlAuthType);
 			encodingService.authType = restTemplate.getForObject(urlAuthType, String.class);
+			log.info("auth type is : " + encodingService.authType);
 		}catch (Exception e) {
+			log.error("authUrl access issue", e);
 			throw new EncodingException("rest call error for : " + urlAuthType + " - " + e);
 		}
-		
-		encodingService.authType = System.getProperty("esupNfcTagKeyboard.authType", defaultProperties.getProperty("authType"));
-
 		
 		log.info("Startup OK");
 		
@@ -69,9 +69,11 @@ public class EsupNfcTagKeyboardApplication {
 		
 		while(true) {
 			try {
+				log.info("Application is now OK");
 				notifySuccess();
 				run();
 			} catch(Exception e) {
+				log.error(e.getMessage(), e);
 				notifyError(e);
 			}
 		}
@@ -96,14 +98,14 @@ public class EsupNfcTagKeyboardApplication {
 					try {
 						nfcResultBean = encodingService.desfireNfcComm(csn);						
 					} catch (Exception e) {
-						log.debug("desfire error", e);
+						log.error("desfire error", e);
 					}
 				}
 				if(nfcResultBean != null && (CODE.END.equals(nfcResultBean.getCode()) || CODE.OK.equals(nfcResultBean.getCode()))){
 					display = encodingService.getDisplay(nfcResultBean.getTaglogId());
 					
 				}
-				System.err.println(display);
+				System.out.println(display);
 				if(csn != null && !csn.equals("") && (!csn.equals(lastCsn) || System.currentTimeMillis()-time > TIME_BETWEEN_SAME_CARD)) {
 					time = System.currentTimeMillis();
 					lastCsn = csn;
@@ -130,7 +132,6 @@ public class EsupNfcTagKeyboardApplication {
 	private static void notifyError(Exception e) {
 		if(success) {
 			success = false;
-			log.error(e.getMessage(), e);
 			try {
 				trayIconService.changeIconKO("ERROR  : " + e.getMessage());
 				trayIconService.displayMessage("ERROR", e.getMessage(), TrayIcon.MessageType.ERROR);			
@@ -144,7 +145,6 @@ public class EsupNfcTagKeyboardApplication {
 	private static void notifySuccess() {
 		if(!success) {
 			success = true;
-			log.info("Application is now OK");
 			try {
 				trayIconService.changeIconOK();
 				trayIconService.displayMessage("INFO", "L'application est de nouveau accessible", TrayIcon.MessageType.INFO);
