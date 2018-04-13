@@ -111,7 +111,7 @@
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>org.esupportail.esupnfctagkeyboard.esupnfctagkeyboardApplication</mainClass>
+							<mainClass>org.esupportail.esupnfctagkeyboard.EsupNfcTagKeyboardApplication</mainClass>
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 						</manifest>
 						<manifestEntries>
