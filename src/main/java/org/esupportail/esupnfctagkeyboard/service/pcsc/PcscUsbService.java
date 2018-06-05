@@ -43,14 +43,16 @@ public class PcscUsbService {
 	}
 	
 	public String connection() throws CardException{
-		for (CardTerminal terminal : terminals.list()) {
-			if(!terminal.getName().contains("6121") && terminal.isCardPresent()){
-				cardTerminal = terminal;
-				try{
-					card = cardTerminal.connect("*");
-					return cardTerminal.getName();
-				}catch(JnaPCSCException e){
-					log.error("pcsc connection error", e);
+		if(terminals.list().size()>0) {
+			for (CardTerminal terminal : terminals.list()) {
+				if(!terminal.getName().contains("6121") && terminal.isCardPresent()){
+					cardTerminal = terminal;
+					try{
+						card = cardTerminal.connect("*");
+						return cardTerminal.getName();
+					}catch(JnaPCSCException e){
+						log.error("pcsc connection error", e);
+					}
 				}
 			}
 		}
@@ -67,6 +69,9 @@ public class PcscUsbService {
 
 	public boolean isCardPresent() throws CardException{
 		try {
+			if(terminals.list().size() == 0) {
+				throw new CardException("Pas de lecteur NFC");
+			}
 			for (CardTerminal terminal : terminals.list()) {
 			try {
 				if(!terminal.getName().contains("6121") && terminal.isCardPresent()) return true; 
@@ -75,7 +80,7 @@ public class PcscUsbService {
 			}
 			}
 		}catch (Exception e){
-			throw new CardException(e.getMessage());
+			throw new CardException(e);
 		}
 		return false;
 	}

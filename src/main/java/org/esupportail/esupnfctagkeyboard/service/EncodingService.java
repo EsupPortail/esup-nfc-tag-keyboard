@@ -1,7 +1,5 @@
 package org.esupportail.esupnfctagkeyboard.service;
 
-import java.io.IOException;
-
 import javax.smartcardio.CardException;
 
 import org.apache.log4j.Logger;
@@ -15,8 +13,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SuppressWarnings("restriction")
@@ -128,7 +124,7 @@ public class EncodingService {
 	
 	public String getDisplay(long tagLogId){
 		String display = null;
-		String urlTest = esupNfcTagServerUrl + "/nfc-ws/display?id="+tagLogId;
+		String urlTest = esupNfcTagServerUrl + "/nfc-ws/display?id=" + tagLogId + "&numeroId=" + numeroId;
 		try{
 			display = restTemplate.getForObject(urlTest, String.class);
 		}catch (Exception e) {

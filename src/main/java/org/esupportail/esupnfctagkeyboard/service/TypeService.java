@@ -3,21 +3,15 @@ package org.esupportail.esupnfctagkeyboard.service;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
-import java.lang.reflect.Field;
 
 import org.apache.log4j.Logger;
-import org.esupportail.esupnfctagkeyboard.utils.Utils;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.client.RestTemplate;
+
+import com.jgoodies.common.base.SystemUtils;
 
 public class TypeService {
 
 	private final static Logger log = Logger.getLogger(TypeService.class);
 	
-	private static RestTemplate restTemplate =  new RestTemplate(Utils.clientHttpRequestFactory());
-	private String sgcUrl;
 	private static Robot robot;
 	
 	
@@ -39,44 +33,6 @@ public class TypeService {
 		robot.keyPress(KeyEvent.VK_NUMPAD5);
 		robot.keyRelease(KeyEvent.VK_NUMPAD5);
 		robot.keyRelease(KeyEvent.VK_ALT);
-	}
-	
-	public void writeKeyboard(String st) {
-	    String upperCase = st.toUpperCase();
-
-	    for(int i = 0; i < upperCase.length(); i++) {
-	        String letter = Character.toString(upperCase.charAt(i));
-	        String code = "VK_" + letter;
-
-	        Field f;
-			try {
-				f = KeyEvent.class.getField(code);
-		        int keyEvent = f.getInt(null);
-		        robot.keyPress(KeyEvent.VK_ALT);
-		        for(int j = 3; j >= 0; --j)
-		        {
-		            // extracts a single decade of the key-code and adds
-		            // an offset to get the required VK_NUMPAD key-code
-		            int numpad_kc = keyEvent / (int) (Math.pow(10, j)) % 10 + KeyEvent.VK_NUMPAD0;
-
-		            robot.keyPress(numpad_kc);
-		            robot.keyRelease(numpad_kc);
-		        }
-		        robot.keyRelease(KeyEvent.VK_ALT);
-			} catch (NoSuchFieldException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SecurityException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	    }
 	}
 	
 	public void type(CharSequence characters) {
@@ -160,7 +116,13 @@ public class TypeService {
         case '=': doType(KeyEvent.VK_EQUALS); break;
         case '~': doType(KeyEvent.VK_SHIFT, KeyEvent.VK_BACK_QUOTE); break;
         case '!': doType(KeyEvent.VK_EXCLAMATION_MARK); break;
-        case '@': doType(KeyEvent.VK_ALT, KeyEvent.VK_NUMPAD0, KeyEvent.VK_NUMPAD6, KeyEvent.VK_NUMPAD4); break;
+        case '@':
+        	if(SystemUtils.IS_OS_WINDOWS){
+        		doType(KeyEvent.VK_ALT, KeyEvent.VK_NUMPAD0, KeyEvent.VK_NUMPAD6, KeyEvent.VK_NUMPAD4);
+        	}else{
+        		atLinux();
+        	}
+        	break;
         case '#': doType(KeyEvent.VK_NUMBER_SIGN); break;
         case '$': doType(KeyEvent.VK_DOLLAR); break;
         case '%': doType(KeyEvent.VK_SHIFT, KeyEvent.VK_5); break;
@@ -207,4 +169,22 @@ public class TypeService {
         doType(keyCodes, offset + 1, length - 1);
         robot.keyRelease(keyCodes[offset]);
     }
+    
+    private void atLinux(){
+    	robot.keyPress(KeyEvent.VK_SHIFT);
+    	robot.keyPress(KeyEvent.VK_CONTROL);
+    	robot.keyPress(KeyEvent.VK_U);
+    	robot.keyRelease(KeyEvent.VK_U);
+    	robot.keyPress(KeyEvent.VK_0);
+    	robot.keyRelease(KeyEvent.VK_0);
+    	robot.keyPress(KeyEvent.VK_0);
+    	robot.keyRelease(KeyEvent.VK_0);
+    	robot.keyPress(KeyEvent.VK_4);
+    	robot.keyRelease(KeyEvent.VK_4);
+    	robot.keyPress(KeyEvent.VK_0);
+    	robot.keyRelease(KeyEvent.VK_0);
+    	robot.keyRelease(KeyEvent.VK_CONTROL);
+    	robot.keyRelease(KeyEvent.VK_SHIFT);
+    }
+    
 }

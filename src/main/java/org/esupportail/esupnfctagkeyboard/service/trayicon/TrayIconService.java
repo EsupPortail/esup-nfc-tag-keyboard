@@ -1,70 +1,95 @@
 package org.esupportail.esupnfctagkeyboard.service.trayicon;
 
-import java.awt.AWTException;
 import java.awt.Image;
-import java.awt.MenuItem;
-import java.awt.PopupMenu;
-import java.awt.SystemTray;
-import java.awt.TrayIcon;
-import java.awt.TrayIcon.MessageType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
+
+import org.apache.log4j.Logger;
+
+import dorkbox.systemTray.MenuItem;
+import dorkbox.systemTray.SystemTray;
 
 public class TrayIconService {
 	
 	private static ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-	
+	private final static Logger log = Logger.getLogger(TrayIconService.class);
 	private static SystemTray tray;
-	private static TrayIcon trayIcon;
 	
-	private static String quitCommand = "Exit";
+	private List<MenuItem> menuDeviceList = new ArrayList<MenuItem>();
+	private MenuItem exitItem = new MenuItem(quitCommand, new ActionListener() {
+        public void actionPerformed(final ActionEvent e) {
+            tray.shutdown();
+            System.exit(0);
+        }
+    }); 
+	
+	private static String quitCommand = "Quit";
 	private static String serviceName;
 	
-    private static ActionListener listener = new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-        	if(quitCommand.equals(e.getActionCommand())){
-        		System.exit(0);
-        	}
-        }
-    };
+	public List<String> numeroIds = new ArrayList<String>();
+	
+    public String getServiceName() {
+    	return serviceName;
+    }
     
-	public TrayIconService(String service) throws IOException, AWTException {
-		serviceName = service;
-		tray = SystemTray.getSystemTray();
-		changeIconOK();
+    public void setServiceName(String service) {
+    	serviceName = service;
+    }
+    
+	public TrayIconService() throws IOException {
+		tray = SystemTray.get();
 	}
 	
-	public void setTrayIcon(String imageUrl, String msg) throws IOException{
+	public void refreshTrayIcon(String imageUrl, String msg) throws IOException {
+		displayMessage("INFO", msg);
 		InputStream is = classLoader.getResourceAsStream(imageUrl);
 		Image icon = ImageIO.read(is);
-		PopupMenu popup = new PopupMenu();
-	    MenuItem msgItem = new MenuItem(msg);
-	    popup.add(msgItem);
-		MenuItem exitItem = new MenuItem(quitCommand);
-	    exitItem.addActionListener(listener);
-	    popup.add(exitItem);
-	    int iconWidth = new TrayIcon(icon).getSize().width;
-	    trayIcon = new TrayIcon(icon.getScaledInstance(iconWidth, -1, Image.SCALE_SMOOTH), msg, popup);
-	    trayIcon.addActionListener(listener);
+		tray.setImage(icon);
 	}
 	
-	public void changeIconKO(String msg) throws IOException, AWTException {
-		tray.remove(trayIcon);
-		setTrayIcon("images/iconko.png", msg);
-		tray.add(trayIcon);
+	public void setTrayIcon(String imageUrl, String msg) throws IOException {
+		displayMessage("INFO", msg);
+		InputStream is = classLoader.getResourceAsStream(imageUrl);
+		Image icon = ImageIO.read(is);
+		tray.setImage(icon);
+	    for(final String numeroId : numeroIds){
+		    menuDeviceList.add(new MenuItem(numeroId.trim(), new ActionListener() {
+		        public void actionPerformed(final ActionEvent e) {
+		        	serviceName = numeroId.trim();
+		        	try {
+						changeIconOK();
+					} catch (IOException e1) {
+						log.error("error change tray");
+					}
+		        	log.info("Switch to : " + serviceName);
+					displayMessage("INFO", "L'application est connectée sur : " + serviceName);
+		        }
+
+		    }));
+	    }
+	    
+	    for (MenuItem menuItem : menuDeviceList){
+	    	tray.getMenu().add(menuItem);
+	    }
+	    tray.getMenu().add(exitItem).setShortcut('q'); // case does not matter
 	}
 	
-	public void changeIconOK() throws IOException, AWTException {
-		tray.remove(trayIcon);
-		setTrayIcon("images/icon.png", "EsupSGCKeybEmu " + serviceName);
-		tray.add(trayIcon);
+	public void changeIconKO(String msg) throws IOException {
+		refreshTrayIcon("images/iconko.png", msg);
+	}
+	
+	public void changeIconOK() throws IOException {
+		refreshTrayIcon("images/icon.png", "L'application est connectée sur : " + serviceName);
 	}
 
-	public void displayMessage(String title, String msg, MessageType msgType ){
-		trayIcon.displayMessage(title+" : EsupSGCKeybEmu", msg, msgType);
+	public void displayMessage(String title, String msg){
+		tray.setStatus(msg);
+		tray.setTooltip(msg);
 	}
 }
