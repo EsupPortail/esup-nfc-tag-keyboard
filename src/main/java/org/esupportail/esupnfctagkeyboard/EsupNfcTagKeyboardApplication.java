@@ -42,6 +42,8 @@ public class EsupNfcTagKeyboardApplication {
 	private static String prefix = "";
 	private static String suffix = "";
 	
+	private static String urlAuthType;
+	
 	public static void main(String... args) throws Exception {
 		
 		Properties defaultProperties = new Properties();
@@ -74,11 +76,15 @@ public class EsupNfcTagKeyboardApplication {
 		
 		log.info("redirect : " + redirect + " to : " + redirectUrlTemplate);
 		
-		String urlAuthType = esupNfcTagServerUrl + "/nfc-ws/deviceAuthConfig/?numeroId=" + encodingService.numeroId;
+		urlAuthType = esupNfcTagServerUrl + "/nfc-ws/deviceAuthConfig/?numeroId=" + encodingService.numeroId;
 
 		try{
 			log.info("try to get auth type : " + urlAuthType);
 			encodingService.authType = restTemplate.getForObject(urlAuthType, String.class);
+			if(encodingService.authType == null) {
+				log.error("unable to get authType, please check configuration");
+				throw new EncodingException("unable to get authType");
+			}
 			log.info("auth type is : " + encodingService.authType);
 		}catch (Exception e) {
 			log.error("authUrl access issue", e);
@@ -133,6 +139,7 @@ public class EsupNfcTagKeyboardApplication {
 				String csn = encodingService.readCsn();
 				String display = null;
 				NfcResultBean nfcResultBean = null;
+				encodingService.authType = restTemplate.getForObject(urlAuthType, String.class);
 				if (encodingService.authType.equals("CSN")) {
 					nfcResultBean = encodingService.csnNfcComm(csn);
 				} else {
