@@ -137,25 +137,6 @@
 			      </execution>
 			    </executions>
 			  </plugin>
-			  <plugin>
-	              <groupId>org.apache.maven.plugins</groupId>
-	              <artifactId>maven-jarsigner-plugin</artifactId>
-	              <version>1.2</version>
-	              <executions>
-	                  <execution>
-	                      <id>sign</id>
-	                      <goals>
-	                      	<goal>sign</goal>
-	                      </goals>
-	                  </execution>
-	              </executions>
-	              <configuration>
-	                  <keystore>src/etc/keystore.jks</keystore>
-	                  <alias>server</alias>
-	                  <storepass>esup</storepass>
-	                  <keypass>esup</keypass>
-	              </configuration>
-	      	</plugin>
 		</plugins>
 	</build>
 </project>
