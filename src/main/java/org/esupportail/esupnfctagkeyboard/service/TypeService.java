@@ -25,14 +25,7 @@ public class TypeService {
 	}
 	
 	public void writeMinus() {
-		robot.keyPress(KeyEvent.VK_ALT);
-		robot.keyPress(KeyEvent.VK_NUMPAD0);
-		robot.keyRelease(KeyEvent.VK_NUMPAD0);
-		robot.keyPress(KeyEvent.VK_NUMPAD4);
-		robot.keyRelease(KeyEvent.VK_NUMPAD4);
-		robot.keyPress(KeyEvent.VK_NUMPAD5);
-		robot.keyRelease(KeyEvent.VK_NUMPAD5);
-		robot.keyRelease(KeyEvent.VK_ALT);
+		type("-");
 	}
 	
 	public void type(CharSequence characters) {

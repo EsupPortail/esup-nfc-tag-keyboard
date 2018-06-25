@@ -10,9 +10,13 @@ import org.esupportail.esupnfctagkeyboard.service.pcsc.PcscUsbService;
 import org.esupportail.esupnfctagkeyboard.utils.Utils;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SuppressWarnings("restriction")
@@ -92,7 +96,7 @@ public class EncodingService {
 		}
 	}
 	
-	public NfcResultBean csnNfcComm(String cardId) throws EncodingException, PcscException {
+	public NfcResultBean csnNfcComm(String cardId) throws EncodingException, PcscException, JsonProcessingException {
 		CsnMessageBean nfcMsg = new CsnMessageBean();
 	    nfcMsg.setNumeroId(numeroId);
 	    nfcMsg.setCsn(cardId);
@@ -100,19 +104,19 @@ public class EncodingService {
 	    String jsonInString = null;
 		String url = esupNfcTagServerUrl + "/csn-ws";
 		String nfcComm;
+		jsonInString = mapper.writeValueAsString(nfcMsg);
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<String> entity = new HttpEntity<String>(jsonInString, headers);
 		try{
 			log.info("try tagging on nfc-tag : " + cardId);
-			jsonInString = mapper.writeValueAsString(nfcMsg);
-			HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(MediaType.APPLICATION_JSON);
-
-			HttpEntity<String> entity = new HttpEntity<String>(jsonInString, headers);
-			
-			
 			nfcComm = restTemplate.postForObject(url, entity, String.class);
-		}catch (Exception e) {
+
+		}catch (RestClientException e) {
 		    throw new EncodingException("rest call error for : " + url, e);
 		}
+		
+
 		NfcResultBean nfcresulbean = null;
 		try {
 			nfcresulbean = mapper.readValue(nfcComm, NfcResultBean.class);

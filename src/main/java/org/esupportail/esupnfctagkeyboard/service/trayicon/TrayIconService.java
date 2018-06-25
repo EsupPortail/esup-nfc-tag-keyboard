@@ -73,6 +73,32 @@ public class TrayIconService {
 
 		    }));
 	    }
+		menuDeviceList.add(new MenuItem("forceCsn", new ActionListener() {
+	        public void actionPerformed(final ActionEvent e) {
+	        	serviceName = "forceCsn";
+	        	try {
+					changeIconOK();
+				} catch (IOException e1) {
+					log.error("error change tray");
+				}
+	        	log.info("Switch to : " + serviceName);
+				displayMessage("INFO", "L'application est connectée sur : " + serviceName);
+	        }
+
+	    }));
+		menuDeviceList.add(new MenuItem("forceReverseCsn", new ActionListener() {
+	        public void actionPerformed(final ActionEvent e) {
+	        	serviceName = "forceReverseCsn";
+	        	try {
+					changeIconOK();
+				} catch (IOException e1) {
+					log.error("error change tray");
+				}
+	        	log.info("Switch to : " + serviceName);
+				displayMessage("INFO", "L'application est connectée sur : " + serviceName);
+	        }
+
+	    }));
 	    
 	    for (MenuItem menuItem : menuDeviceList){
 	    	tray.getMenu().add(menuItem);
