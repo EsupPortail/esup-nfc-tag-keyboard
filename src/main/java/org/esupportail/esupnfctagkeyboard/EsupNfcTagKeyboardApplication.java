@@ -43,6 +43,7 @@ public class EsupNfcTagKeyboardApplication {
 	private static boolean emulateKeyboard = true;
 	private static boolean lineFeed = true;
 	private static boolean redirect = false;
+	private static boolean forceCsn = false;
 	private static String redirectUrlTemplate;
 	private static String prefix = "";
 	private static String suffix = "";
@@ -70,6 +71,9 @@ public class EsupNfcTagKeyboardApplication {
 		log.info("default numeroId : " + encodingService.numeroId);
 		emulateKeyboard =  Boolean.parseBoolean(System.getProperty("esupNfcTagKeyboard.emulateKeyboard", defaultProperties.getProperty("emulateKeyboard")));
 		log.info("emulateKeyboard : " + emulateKeyboard);
+		forceCsn =  Boolean.parseBoolean(System.getProperty("esupNfcTagKeyboard.forceCsn", defaultProperties.getProperty("forceCsn")));
+		log.info("forceCsn : " + forceCsn);
+
 		lineFeed =  Boolean.parseBoolean(System.getProperty("esupNfcTagKeyboard.lineFeed", defaultProperties.getProperty("emulateKeyboard")));
 		log.info("lineFeed : " + lineFeed);
 		redirect =  Boolean.parseBoolean(System.getProperty("esupNfcTagKeyboard.redirect", defaultProperties.getProperty("redirect")));
@@ -97,6 +101,7 @@ public class EsupNfcTagKeyboardApplication {
 			if (systemTray != null) {
 				trayIconService = new TrayIconService();
 				trayIconService.numeroIds = numeroIds;
+				trayIconService.forceCsn = forceCsn;
 				trayIconService.setServiceName(encodingService.numeroId);
 				trayIconService.setTrayIcon("images/icon.png", "L'application est connectée sur : " + encodingService.numeroId);
 			}
