@@ -1,3 +1,20 @@
+/**
+ * Licensed to ESUP-Portail under one or more contributor license
+ * agreements. See the NOTICE file distributed with this work for
+ * additional information regarding copyright ownership.
+ *
+ * ESUP-Portail licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except in
+ * compliance with the License. You may obtain a copy of the License at:
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.esupportail.esupnfctagkeyboard;
 
 import java.io.IOException;
@@ -5,17 +22,17 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
-import java.util.logging.Logger;
- 
+
+import org.apache.log4j.Logger;
 
 public class UniqueInstance {
  
     private int port;
- 
     private String message;
- 
     private Runnable runOnReceive;
+	private final static Logger log = Logger.getLogger(UniqueInstance.class);
 
+    
     public UniqueInstance(int port, String message, Runnable runOnReceive) {
         if (port == 0 || (port & 0xffff0000) != 0)
             throw new IllegalArgumentException("Le port doit être compris entre 1 et 65535 : " + port + ".");
@@ -59,7 +76,7 @@ public class UniqueInstance {
                                     }
                                 }.start();
                             } catch(IOException e) {
-                                Logger.getLogger("UniqueInstance").warning("Attente de connexion de socket échouée.");
+                            	log.warn("Attente de connexion de socket échouée.");
                             }
                         }
                     }
@@ -83,7 +100,7 @@ public class UniqueInstance {
             pw = new PrintWriter(socket.getOutputStream());
             pw.write(message);
         } catch(IOException e) {
-            Logger.getLogger("UniqueInstance").warning("Écriture sur flux de sortie de la socket échouée.");
+        	log.warn("Écriture sur flux de sortie de la socket échouée.");
         } finally {
             if(pw != null)
                 pw.close();
@@ -101,7 +118,7 @@ public class UniqueInstance {
                 runOnReceive.run();
             }
         } catch(IOException e) {
-            Logger.getLogger("UniqueInstance").warning("Lecture du flux d'entrée de la socket échoué.");
+        	log.warn("Lecture du flux d'entrée de la socket échoué.");
         } finally {
             if(sc != null)
                 sc.close();
