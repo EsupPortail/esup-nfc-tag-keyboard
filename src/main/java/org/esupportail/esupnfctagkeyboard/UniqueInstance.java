@@ -38,7 +38,6 @@ public class UniqueInstance {
             throw new IllegalArgumentException("Le port doit être compris entre 1 et 65535 : " + port + ".");
         if (runOnReceive != null && message == null)
             throw new IllegalArgumentException("runOnReceive != null ==> message == null.");
- 
         this.port = port;
         this.message = message;
         this.runOnReceive = runOnReceive;
@@ -49,9 +48,7 @@ public class UniqueInstance {
     }
 
     public boolean launch() {
-
     	boolean unique;
- 
         try {
         	final ServerSocket server = new ServerSocket(port);
             unique = true;
@@ -60,19 +57,16 @@ public class UniqueInstance {
                     {
                         setDaemon(true);
                     }
- 
-                    @Override public void run() {
+                     @Override public void run() {
                         while(true) {
                             try {
                             	final Socket socket = server.accept();
                                 new Thread("UniqueInstance-SocketReceiver") {
- 
                                     {
-                                        setDaemon(true);
+                                    	setDaemon(true);
                                     }
- 
                                     @Override public void run() {
-                                        receive(socket);
+                                    	receive(socket);
                                     }
                                 }.start();
                             } catch(IOException e) {
@@ -81,8 +75,7 @@ public class UniqueInstance {
                         }
                     }
                 };
- 
-                portListenerThread.start();
+                 portListenerThread.start();
             }
         } catch(IOException e) {
             unique = false;
