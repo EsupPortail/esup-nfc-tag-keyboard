@@ -24,8 +24,7 @@ public class TrayIconService {
 	private List<MenuItem> menuDeviceList = new ArrayList<MenuItem>();
 	private MenuItem exitItem = new MenuItem(quitCommand, new ActionListener() {
 		public void actionPerformed(final ActionEvent e) {
-			tray.shutdown();
-			System.exit(0);
+			exit();
 		}
 	}); 
 
@@ -119,5 +118,10 @@ public class TrayIconService {
 	public void displayMessage(String title, String msg){
 		tray.setStatus(msg);
 		tray.setTooltip(msg);
+	}
+	
+	public void exit() {
+		tray.shutdown();
+		System.exit(0);
 	}
 }

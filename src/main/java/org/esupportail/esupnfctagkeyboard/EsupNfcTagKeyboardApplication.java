@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Properties;
 
 import javax.smartcardio.CardException;
+import javax.swing.SwingUtilities;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 import org.apache.log4j.Logger;
 import org.esupportail.esupnfctagkeyboard.domain.NfcResultBean;
@@ -47,9 +50,21 @@ public class EsupNfcTagKeyboardApplication {
 	private static String redirectUrlTemplate;
 	private static String prefix = "";
 	private static String suffix = "";
-
 	private static String urlAuthType;
 
+	private static int port = 33333;
+	private static String title = "esupNfcTagKeyboard";
+	private static String message = "Impossible d'ouvrir une deuxième instance de l'application";
+	private static Runnable runOnReceive = new Runnable() {
+	    public void run() {
+	        SwingUtilities.invokeLater(new Runnable() {
+	            public void run() {
+	            	trayIconService.displayMessage(title, message);
+	            }
+	        });
+	    }                   
+	};
+	
 	public static void main(String... args) throws Exception {
 
 		Properties defaultProperties = new Properties();
@@ -60,6 +75,19 @@ public class EsupNfcTagKeyboardApplication {
 			throw new TypeException("sgcUrl not found");
 		}
 
+		String strPort = System.getProperty("esupNfcTagKeyboard.port", defaultProperties.getProperty("port"));
+		if(strPort != null){
+			port = Integer.valueOf(strPort);
+		}
+		log.info("port : " + port);
+		UniqueInstance uniqueInstance = new UniqueInstance(port, title, runOnReceive);
+		
+		if(!uniqueInstance.launch()) {
+			log.error(message);
+			System.exit(0);			
+		}
+
+		
 		esupNfcTagServerUrl = System.getProperty("esupNfcTagKeyboard.esupNfcTagServerUrl", defaultProperties.getProperty("esupNfcTagServerUrl"));
 		encodingService = new EncodingService(esupNfcTagServerUrl);
 		numeroIdsString =  System.getProperty("esupNfcTagKeyboard.numeroId", defaultProperties.getProperty("numeroIds"));
