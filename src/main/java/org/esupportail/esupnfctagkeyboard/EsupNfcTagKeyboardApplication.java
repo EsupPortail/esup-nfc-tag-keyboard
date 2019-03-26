@@ -248,18 +248,19 @@ public class EsupNfcTagKeyboardApplication {
 				encodingService.pcscDisconnect();
 
 
-				while(encodingService.isCardPresent()){
+				while(encodingService.isCardPresent()) {
 					Utils.sleep(1000);
 				}
+				
 			} catch (CardException e) {
 				log.error("Pas de connexion PCSC", e);
+				throw new Exception(e);
 			} catch (PcscException e) {
 				log.error("Erreur PCSC", e);
 			} catch (EncodingException e) {
 				log.warn("Erreur controle carte");
 				emulateError();
 			}
-
 		}
 	}
 
@@ -274,7 +275,8 @@ public class EsupNfcTagKeyboardApplication {
 		if(success) {
 			success = false;
 			try {
-				trayIconService.changeIconKO("ERROR  : " + e.getMessage());			
+				trayIconService.changeIconKO("ERROR  : " + e.getMessage());
+				System.err.println("FALSE");
 			} catch (Exception e1) {
 				log.error(e1.getMessage(), e1);
 			}
