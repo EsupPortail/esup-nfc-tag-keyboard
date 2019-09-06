@@ -10,8 +10,8 @@
 	<url>http://maven.apache.org</url>
 	<properties>
 		<spring.version>4.3.18.RELEASE</spring.version>
-		<maven.compiler.source>1.6</maven.compiler.source>
-		<maven.compiler.target>1.6</maven.compiler.target>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -38,7 +38,7 @@
 			<groupId>io.github.jnasmartcardio</groupId>
 			<artifactId>jnasmartcardio</artifactId>
 			<version>0.2.7</version>
-		</dependency>		
+		</dependency>
 		<dependency>
 		    <groupId>log4j</groupId>
 		    <artifactId>log4j</artifactId>
@@ -89,7 +89,36 @@
 		    <artifactId>launch4j-maven-plugin</artifactId>
 		    <version>1.7.17</version>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-controls</artifactId>
+			<version>11.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-web</artifactId>
+			<version>11.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-fxml</artifactId>
+			<version>11.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-graphics</artifactId>
+			<version>11.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-media</artifactId>
+			<version>11.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-swing</artifactId>
+			<version>11.0.2</version>
+		</dependency>
 	    <dependency>
 	      <groupId>com.dorkbox</groupId>
 	      <artifactId>SystemTray</artifactId>
@@ -138,8 +167,6 @@
 			    
 			    <configuration>
 			    <finalName>esupnfctagkeyboard</finalName>
-		    	<additionalClasspathElement>${basedir}/src/images/</additionalClasspathElement>
-			    <additionalClasspathElement>${basedir}/src/font/</additionalClasspathElement>
 			      <descriptorRefs>
 			        <descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>

@@ -213,7 +213,7 @@ public class EsupNfcTagKeyboardApplication {
 								}
 							}
 							if(redirect){
-								String redirectUrl = MessageFormat.format(redirectUrlTemplate, new String[] {display});
+								String redirectUrl = MessageFormat.format(redirectUrlTemplate, display);
 								log.info("try to redirect to : " + redirectUrl);
 								Runtime runtime = Runtime.getRuntime();
 								try {
