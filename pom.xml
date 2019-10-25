@@ -166,7 +166,7 @@
 			    <version>2.2-beta-4</version>
 			    
 			    <configuration>
-			    <finalName>esupnfctagkeyboard-final</finalName>
+			    <finalName>esup-nfc-tag-keyboard-final</finalName>
 			      <descriptorRefs>
 			        <descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
@@ -177,7 +177,7 @@
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 						</manifest>
 						<manifestEntries>
-							<Application-Name>ESUP-SGC-Client - JWS</Application-Name>
+							<Application-Name>ESUP-NFC-TAG-Keyboard</Application-Name>
 							<Trusted-Library>true</Trusted-Library>
 							<Permissions>all-permissions</Permissions>					
 						</manifestEntries>	
