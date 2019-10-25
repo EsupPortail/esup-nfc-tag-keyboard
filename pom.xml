@@ -166,7 +166,7 @@
 			    <version>2.2-beta-4</version>
 			    
 			    <configuration>
-			    <finalName>esupnfctagkeyboard</finalName>
+			    <finalName>esupnfctagkeyboard-final</finalName>
 			      <descriptorRefs>
 			        <descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
