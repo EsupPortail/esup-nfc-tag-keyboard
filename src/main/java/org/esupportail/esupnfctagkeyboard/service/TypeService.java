@@ -41,8 +41,8 @@ public class TypeService {
 		}
 	}
 	
-	public void writeMinus() {
-		type("-");
+	public void writeMinus(String noResponseMessage) {
+		type(noResponseMessage);
 	}
 	
 	public void type(CharSequence characters) {

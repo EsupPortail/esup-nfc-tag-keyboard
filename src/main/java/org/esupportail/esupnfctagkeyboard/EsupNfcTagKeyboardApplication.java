@@ -57,6 +57,7 @@ public class EsupNfcTagKeyboardApplication {
 	private static boolean success = false;
 
 	private static String esupNfcTagServerUrl;
+	private static String noResponseMessage = "-";
 	private static String numeroIdsString;
 	private static boolean emulateKeyboard = true;
 	private static boolean lineFeed = true;
@@ -104,6 +105,7 @@ public class EsupNfcTagKeyboardApplication {
 
 		
 		esupNfcTagServerUrl = System.getProperty("esupNfcTagKeyboard.esupNfcTagServerUrl", defaultProperties.getProperty("esupNfcTagServerUrl"));
+		noResponseMessage = System.getProperty("esupNfcTagKeyboard.noResponseMessage", defaultProperties.getProperty("noResponseMessage"));
 		encodingService = new EncodingService(esupNfcTagServerUrl);
 		numeroIdsString =  System.getProperty("esupNfcTagKeyboard.numeroId", defaultProperties.getProperty("numeroIds"));
 		prefix =  System.getProperty("esupNfcTagKeyboard.prefix", defaultProperties.getProperty("prefix"));
@@ -225,7 +227,7 @@ public class EsupNfcTagKeyboardApplication {
 						} else {
 							log.info("Carte inconnue");
 							if(emulateKeyboard){
-								typeService.writeMinus();
+								typeService.writeMinus(noResponseMessage);
 							}		
 						}
 					} else {
@@ -266,7 +268,7 @@ public class EsupNfcTagKeyboardApplication {
 
 	private static void emulateError() {
 		if(emulateKeyboard){
-			typeService.writeMinus();
+			typeService.writeMinus(noResponseMessage);
 		}
 		Utils.sleep(3000);
 	}
