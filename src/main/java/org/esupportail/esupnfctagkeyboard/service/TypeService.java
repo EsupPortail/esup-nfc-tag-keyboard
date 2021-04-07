@@ -40,11 +40,7 @@ public class TypeService {
 			log.error(e);
 		}
 	}
-	
-	public void writeMinus(String noResponseMessage) {
-		type(noResponseMessage);
-	}
-	
+
 	public void type(CharSequence characters) {
         int length = characters.length();
         for (int i = 0; i < length; i++) {

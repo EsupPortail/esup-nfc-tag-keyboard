@@ -227,7 +227,7 @@ public class EsupNfcTagKeyboardApplication {
 						} else {
 							log.info("Carte inconnue");
 							if(emulateKeyboard){
-								typeService.writeMinus(noResponseMessage);
+								typeService.type(noResponseMessage);
 							}		
 						}
 					} else {
@@ -249,7 +249,6 @@ public class EsupNfcTagKeyboardApplication {
 				}
 				encodingService.pcscDisconnect();
 
-
 				while(encodingService.isCardPresent()) {
 					Utils.sleep(1000);
 				}
@@ -268,7 +267,7 @@ public class EsupNfcTagKeyboardApplication {
 
 	private static void emulateError() {
 		if(emulateKeyboard){
-			typeService.writeMinus(noResponseMessage);
+			typeService.type(noResponseMessage);
 		}
 		Utils.sleep(3000);
 	}
