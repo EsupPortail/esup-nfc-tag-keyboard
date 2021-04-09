@@ -49,7 +49,10 @@ public class EsupNfcTagKeyboardApplication {
 
 	private static RestTemplate restTemplate =  new RestTemplate(Utils.clientHttpRequestFactory());
 
-	private static long TIME_BETWEEN_SAME_CARD = 3000; 
+	private static long timeBetweenSameCard = 3000;
+	private static long cardReadSleepTime = 1000;
+	private static long onErrorSleepTime = 3000;
+	private static long beforeNextCardSleepTime = 1500;
 
 	private static TrayIconService trayIconService; 
 	private static EncodingService encodingService;
@@ -103,7 +106,11 @@ public class EsupNfcTagKeyboardApplication {
 			System.exit(0);			
 		}
 
-		
+		timeBetweenSameCard = Long.parseLong(System.getProperty("esupNfcTagKeyboard.timeBetweenSameCard", defaultProperties.getProperty("timeBetweenSameCard")));
+		cardReadSleepTime = Long.parseLong(System.getProperty("esupNfcTagKeyboard.cardReadSleepTime", defaultProperties.getProperty("cardReadSleepTime")));
+		onErrorSleepTime = Long.parseLong(System.getProperty("esupNfcTagKeyboard.onErrorSleepTime", defaultProperties.getProperty("onErrorSleepTime")));
+		beforeNextCardSleepTime = Long.parseLong(System.getProperty("esupNfcTagKeyboard.beforeNextCardSleepTime", defaultProperties.getProperty("beforeNextCardSleepTime")));
+
 		esupNfcTagServerUrl = System.getProperty("esupNfcTagKeyboard.esupNfcTagServerUrl", defaultProperties.getProperty("esupNfcTagServerUrl"));
 		noResponseMessage = System.getProperty("esupNfcTagKeyboard.noResponseMessage", defaultProperties.getProperty("noResponseMessage"));
 		encodingService = new EncodingService(esupNfcTagServerUrl);
@@ -118,8 +125,7 @@ public class EsupNfcTagKeyboardApplication {
 		log.info("emulateKeyboard : " + emulateKeyboard);
 		forceCsn =  Boolean.parseBoolean(System.getProperty("esupNfcTagKeyboard.forceCsn", defaultProperties.getProperty("forceCsn")));
 		log.info("forceCsn : " + forceCsn);
-
-		lineFeed =  Boolean.parseBoolean(System.getProperty("esupNfcTagKeyboard.lineFeed", defaultProperties.getProperty("emulateKeyboard")));
+		lineFeed =  Boolean.parseBoolean(System.getProperty("esupNfcTagKeyboard.lineFeed", defaultProperties.getProperty("lineFeed")));
 		log.info("lineFeed : " + lineFeed);
 		redirect =  Boolean.parseBoolean(System.getProperty("esupNfcTagKeyboard.redirect", defaultProperties.getProperty("redirect")));
 		redirectUrlTemplate =  System.getProperty("esupNfcTagKeyboard.redirectUrlTemplate", defaultProperties.getProperty("redirectUrlTemplate"));
@@ -165,7 +171,7 @@ public class EsupNfcTagKeyboardApplication {
 				if(success) {
 					log.error(e.getMessage());
 					notifyError(e);
-					Utils.sleep(3000);
+					Utils.sleep(onErrorSleepTime);
 				}
 			}
 			Utils.sleep(1500);
@@ -181,11 +187,11 @@ public class EsupNfcTagKeyboardApplication {
 				while(!encodingService.isCardPresent()){
 					notifySuccess();
 					encodingService.numeroId = trayIconService.getServiceName();
-					Utils.sleep(1000);
+					Utils.sleep(cardReadSleepTime);
 				}
 				encodingService.pcscConnection();
 				String csn = encodingService.readCsn();
-				if(csn != null && !csn.equals("") && (!csn.equals(lastCsn) || System.currentTimeMillis()-time > TIME_BETWEEN_SAME_CARD)) {
+				if(csn != null && !csn.equals("") && (!csn.equals(lastCsn) || System.currentTimeMillis()-time > timeBetweenSameCard)) {
 					if(!encodingService.numeroId.equals("forceCsn") && !encodingService.numeroId.equals("forceReverseCsn")) {
 						String display = null;
 						NfcResultBean nfcResultBean = null;
@@ -250,7 +256,7 @@ public class EsupNfcTagKeyboardApplication {
 				encodingService.pcscDisconnect();
 
 				while(encodingService.isCardPresent()) {
-					Utils.sleep(1000);
+					Utils.sleep(cardReadSleepTime);
 				}
 				
 			} catch (CardException e) {
@@ -269,7 +275,7 @@ public class EsupNfcTagKeyboardApplication {
 		if(emulateKeyboard){
 			typeService.type(noResponseMessage);
 		}
-		Utils.sleep(3000);
+		Utils.sleep(onErrorSleepTime);
 	}
 	
 	private static void notifyError(Exception e) {
@@ -282,7 +288,6 @@ public class EsupNfcTagKeyboardApplication {
 				log.error(e1.getMessage(), e1);
 			}
 		}
-		Utils.sleep(1000);
 	}
 
 	private static void notifySuccess() {
