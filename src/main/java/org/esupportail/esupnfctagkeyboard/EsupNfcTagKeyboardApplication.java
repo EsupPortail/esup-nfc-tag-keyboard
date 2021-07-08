@@ -41,7 +41,7 @@ import org.esupportail.esupnfctagkeyboard.utils.Utils;
 import org.springframework.web.client.RestTemplate;
 
 import dorkbox.systemTray.SystemTray;
-import dorkbox.util.CacheUtil;
+// import dorkbox.util.CacheUtil;
 
 public class EsupNfcTagKeyboardApplication {
 
@@ -144,7 +144,7 @@ public class EsupNfcTagKeyboardApplication {
 			log.error("authUrl access issue", e);
 			throw new EncodingException("rest call error for : " + urlAuthType + " - " + e);
 		}
-		CacheUtil.clear();
+		// CacheUtil.clear();
 
 		SystemTray systemTray = SystemTray.get();
 
