@@ -123,15 +123,8 @@
 	    <dependency>
 	      <groupId>com.dorkbox</groupId>
 	      <artifactId>SystemTray</artifactId>
-	      <version>4.1</version>
+	      <version>3.17</version>
 	    </dependency>
-	    <!-- 
-	    <dependency>
-		    <groupId>com.dorkbox</groupId>
-		    <artifactId>Utilities</artifactId>
-		    <version>1.12</version>
-	    </dependency>
-	    -->
 	    		
 	</dependencies>
 	<build>
