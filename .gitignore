@@ -1,6 +1,8 @@
-.classpath
-.project
-.settings/
-target/
-*.log
-.idea/
+*
+!.gitignore
+!src/
+!src/**
+!LICENCE
+!README.md
+!NOTICE
+!pom.xml
