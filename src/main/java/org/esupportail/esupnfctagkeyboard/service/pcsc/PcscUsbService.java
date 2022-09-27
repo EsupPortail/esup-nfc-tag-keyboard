@@ -62,7 +62,7 @@ public class PcscUsbService {
 	public String connection() throws CardException{
 		if(terminals.list().size()>0) {
 			for (CardTerminal terminal : terminals.list()) {
-				if(!terminal.getName().contains("6121") && terminal.isCardPresent()){
+				if(!terminal.getName().contains("6121") && !terminal.getName().contains("SAM Reader") && terminal.isCardPresent()){
 					cardTerminal = terminal;
 					try{
 						card = cardTerminal.connect("*");
@@ -91,7 +91,7 @@ public class PcscUsbService {
 			}
 			for (CardTerminal terminal : terminals.list()) {
 			try {
-				if(!terminal.getName().contains("6121") && terminal.isCardPresent()) return true; 
+				if(!terminal.getName().contains("6121") && !terminal.getName().contains("SAM Reader") && terminal.isCardPresent()) return true; 
 			} catch (CardException e) {
 				log.info("Pas de carte");
 			}
