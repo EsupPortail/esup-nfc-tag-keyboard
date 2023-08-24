@@ -37,15 +37,9 @@
 		    <version>4.5.13</version>
 		</dependency>
 		<dependency>
-			<groupId>io.github.jnasmartcardio</groupId>
-			<artifactId>jnasmartcardio</artifactId>
-			<version>0.2.7</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>jna</artifactId>
-					<groupId>net.java.dev.jna</groupId>
-				</exclusion>
-			</exclusions>
+			<groupId>com.github.martinpaljak</groupId>
+			<artifactId>apdu4j-jnasmartcardio</artifactId>
+			<version>0.2.7+191107</version>
 		</dependency>
 		<dependency>
 		    <groupId>log4j</groupId>
@@ -127,12 +121,18 @@
 	      <groupId>com.dorkbox</groupId>
 	      <artifactId>SystemTray</artifactId>
 	      <version>4.1</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>logback-classic</artifactId>
-					<groupId>ch.qos.logback</groupId>
-				</exclusion>
-			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>net.java.dev.jna</groupId>
+			<artifactId>jna</artifactId>
+			<version>5.8.0</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.java.dev.jna</groupId>
+			<artifactId>jna-platform</artifactId>
+			<version>5.8.0</version>
+			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 	<build>
