@@ -27,6 +27,9 @@ import java.util.Properties;
 import javax.smartcardio.CardException;
 import javax.swing.SwingUtilities;
 
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 import org.esupportail.esupnfctagkeyboard.domain.NfcResultBean;
 import org.esupportail.esupnfctagkeyboard.domain.NfcResultBean.CODE;
@@ -41,9 +44,8 @@ import org.esupportail.esupnfctagkeyboard.utils.Utils;
 import org.springframework.web.client.RestTemplate;
 
 import dorkbox.systemTray.SystemTray;
-import dorkbox.util.CacheUtil;
 
-public class EsupNfcTagKeyboardApplication {
+public class EsupNfcTagKeyboardApplication extends Application {
 
 	private final static Logger log = Logger.getLogger(EsupNfcTagKeyboardApplication.class);
 
@@ -83,8 +85,8 @@ public class EsupNfcTagKeyboardApplication {
 	        });
 	    }                   
 	};
-	
-	public static void main(String... args) throws Exception {
+
+	public void start(final Stage primaryStage)  throws Exception {
 
 		Properties defaultProperties = new Properties();
 		InputStream in = EsupNfcTagKeyboardApplication.class.getResourceAsStream("/esupnfctagkeyboard.properties");
@@ -144,38 +146,35 @@ public class EsupNfcTagKeyboardApplication {
 			log.error("authUrl access issue", e);
 			throw new EncodingException("rest call error for : " + urlAuthType + " - " + e);
 		}
-		CacheUtil.clear();
 
-		SystemTray systemTray = SystemTray.get();
+		SystemTray systemTray = SystemTray.get(TrayIconService.TRAY_NAME);
 
-		try {
-			if (systemTray != null) {
-				trayIconService = new TrayIconService();
-				trayIconService.numeroIds = numeroIds;
-				trayIconService.forceCsn = forceCsn;
-				trayIconService.setServiceName(encodingService.numeroId);
-				trayIconService.setTrayIcon("images/icon.png", "L'application est connectée sur : " + encodingService.numeroId);
-			}
-		} catch(Exception e) {
-			log.error("SystemTray error", e);
-			throw new Exception("SystemTray not supported", e);
-		}	
+		if (systemTray != null) {
+			trayIconService = new TrayIconService(systemTray);
+			trayIconService.numeroIds = numeroIds;
+			trayIconService.forceCsn = forceCsn;
+			trayIconService.setServiceName(encodingService.numeroId);
+			trayIconService.setTrayIcon("images/icon.png", "L'application est connectée sur : " + encodingService.numeroId);
+		}
 
 		log.info("Startup OK");
 		success = true;
 
-		while(true) {
-			try {
-				run();
-			} catch(Exception e) {
-				if(success) {
-					log.error(e.getMessage());
-					notifyError(e);
-					Utils.sleep(onErrorSleepTime);
+		new Thread(() -> {
+			while (true) {
+				try {
+					run();
+				} catch (Exception e) {
+					if (success) {
+						log.error(e.getMessage());
+						notifyError(e);
+						Utils.sleep(onErrorSleepTime);
+					}
 				}
+				Utils.sleep(1500);
 			}
-			Utils.sleep(1500);
-		}
+		}).start();
+
 	}
 
 	protected static void run() throws Exception {

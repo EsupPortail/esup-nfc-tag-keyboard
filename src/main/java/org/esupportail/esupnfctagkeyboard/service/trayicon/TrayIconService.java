@@ -34,6 +34,7 @@ import dorkbox.systemTray.SystemTray;
 
 public class TrayIconService {
 
+	public static String TRAY_NAME = "esupnfctagkeyboard";
 	private static ClassLoader classLoader = ClassLoader.getSystemClassLoader();
 	private final static Logger log = Logger.getLogger(TrayIconService.class);
 	private static SystemTray tray;
@@ -59,8 +60,8 @@ public class TrayIconService {
 		serviceName = service;
 	}
 
-	public TrayIconService() throws IOException {
-		tray = SystemTray.get();
+	public TrayIconService(SystemTray tray) throws IOException {
+		this.tray = tray;
 	}
 
 	public void refreshTrayIcon(String imageUrl, String msg) throws IOException {
