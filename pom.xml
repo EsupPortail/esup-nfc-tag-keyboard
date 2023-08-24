@@ -40,6 +40,12 @@
 			<groupId>io.github.jnasmartcardio</groupId>
 			<artifactId>jnasmartcardio</artifactId>
 			<version>0.2.7</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>jna</artifactId>
+					<groupId>net.java.dev.jna</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 		    <groupId>log4j</groupId>
@@ -114,7 +120,7 @@
 	    <dependency>
 	      <groupId>com.dorkbox</groupId>
 	      <artifactId>SystemTray</artifactId>
-	      <version>3.12</version>
+	      <version>4.1</version>
 	    </dependency>	 
 	</dependencies>
 	<build>
