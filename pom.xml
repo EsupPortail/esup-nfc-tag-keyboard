@@ -127,7 +127,13 @@
 	      <groupId>com.dorkbox</groupId>
 	      <artifactId>SystemTray</artifactId>
 	      <version>4.1</version>
-	    </dependency>	 
+			<exclusions>
+				<exclusion>
+					<artifactId>logback-classic</artifactId>
+					<groupId>ch.qos.logback</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
