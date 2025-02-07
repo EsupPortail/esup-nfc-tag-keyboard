@@ -115,7 +115,12 @@
 	    <dependency>
 	      <groupId>com.dorkbox</groupId>
 	      <artifactId>SystemTray</artifactId>
-	      <version>4.4</version>
+	      <version>4.1</version>
+			<!--
+			Ne pas mettre à jour en 4.4 par exemple
+			Sinon le clic droit ne fonctionne plus sur le menu windows et l'erreur suivante apparait :
+			java.lang.NullPointerException: Cannot read field "y" because "bounds" is null
+			-->
 		</dependency>
 		<dependency>
 			<groupId>net.java.dev.jna</groupId>
