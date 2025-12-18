@@ -27,16 +27,16 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import org.apache.log4j.Logger;
-
 import dorkbox.systemTray.MenuItem;
 import dorkbox.systemTray.SystemTray;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TrayIconService {
 
 	public static String TRAY_NAME = "esupnfctagkeyboard";
 	private static ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-	private final static Logger log = Logger.getLogger(TrayIconService.class);
+	private final static Logger log = LoggerFactory.getLogger(TrayIconService.class);
 	private static SystemTray tray;
 
 	private List<MenuItem> menuDeviceList = new ArrayList<MenuItem>();

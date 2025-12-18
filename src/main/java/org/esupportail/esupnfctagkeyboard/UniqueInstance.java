@@ -17,20 +17,22 @@
  */
 package org.esupportail.esupnfctagkeyboard;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
-import org.apache.log4j.Logger;
 
 public class UniqueInstance {
  
     private int port;
     private String message;
     private Runnable runOnReceive;
-	private final static Logger log = Logger.getLogger(UniqueInstance.class);
+	private final static Logger log = LoggerFactory.getLogger(UniqueInstance.class);
 
     
     public UniqueInstance(int port, String message, Runnable runOnReceive) {

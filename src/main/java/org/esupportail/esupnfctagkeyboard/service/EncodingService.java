@@ -19,12 +19,13 @@ package org.esupportail.esupnfctagkeyboard.service;
 
 import javax.smartcardio.CardException;
 
-import org.apache.log4j.Logger;
 import org.esupportail.esupnfctagkeyboard.domain.CsnMessageBean;
 import org.esupportail.esupnfctagkeyboard.domain.NfcResultBean;
 import org.esupportail.esupnfctagkeyboard.service.pcsc.PcscException;
 import org.esupportail.esupnfctagkeyboard.service.pcsc.PcscUsbService;
 import org.esupportail.esupnfctagkeyboard.utils.Utils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -39,7 +40,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @SuppressWarnings("restriction")
 public class EncodingService {
 
-	private final static Logger log = Logger.getLogger(EncodingService.class);
+	private final static Logger log = LoggerFactory.getLogger(EncodingService.class);
 	
 	private String esupNfcTagServerUrl;
 	public String numeroId;

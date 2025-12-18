@@ -21,13 +21,13 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 
-import org.apache.log4j.Logger;
-
 import com.jgoodies.common.base.SystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TypeService {
 
-	private final static Logger log = Logger.getLogger(TypeService.class);
+	private final static Logger log = LoggerFactory.getLogger(TypeService.class);
 	
 	private static Robot robot;
 	
@@ -37,7 +37,7 @@ public class TypeService {
 		try {
 			robot = new Robot();
 		} catch (AWTException e) {
-			log.error(e);
+			log.error("Exception on TypeService when construct java.awt.Robot", e);
 		}
 	}
 

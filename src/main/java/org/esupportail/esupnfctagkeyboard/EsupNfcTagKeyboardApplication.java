@@ -29,7 +29,6 @@ import javax.swing.SwingUtilities;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import org.apache.log4j.Logger;
 import org.esupportail.esupnfctagkeyboard.domain.NfcResultBean;
 import org.esupportail.esupnfctagkeyboard.domain.NfcResultBean.CODE;
 import org.esupportail.esupnfctagkeyboard.service.EncodingException;
@@ -40,13 +39,15 @@ import org.esupportail.esupnfctagkeyboard.service.pcsc.PcscException;
 import org.esupportail.esupnfctagkeyboard.service.trayicon.TrayIconService;
 import org.esupportail.esupnfctagkeyboard.utils.HexStringUtils;
 import org.esupportail.esupnfctagkeyboard.utils.Utils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestTemplate;
 
 import dorkbox.systemTray.SystemTray;
 
 public class EsupNfcTagKeyboardApplication extends Application {
 
-	private final static Logger log = Logger.getLogger(EsupNfcTagKeyboardApplication.class);
+	private final static Logger log = LoggerFactory.getLogger(EsupNfcTagKeyboardApplication.class);
 
 	private static RestTemplate restTemplate =  new RestTemplate(Utils.clientHttpRequestFactory());
 
