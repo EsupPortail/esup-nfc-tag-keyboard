@@ -138,7 +138,7 @@ public class EncodingService {
 		try {
 			nfcresulbean = mapper.readValue(nfcComm, NfcResultBean.class);
 		} catch (Exception e) {
-			log.error("parse error" , e);
+			log.error("parse error on : " + nfcComm, e);
 		} 
 		return nfcresulbean;
 	}

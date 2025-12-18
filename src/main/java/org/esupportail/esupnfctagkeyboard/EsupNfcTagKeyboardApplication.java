@@ -28,7 +28,6 @@ import javax.smartcardio.CardException;
 import javax.swing.SwingUtilities;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 import org.esupportail.esupnfctagkeyboard.domain.NfcResultBean;
